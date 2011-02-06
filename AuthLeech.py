@@ -89,7 +89,7 @@ def mk_nice_domain(domain):
 def form_query(script):
     #"perfecticus" site:pastebin.com jan 30
     #today = date.today();
-    query = 'site:pastebin.com "%s" feb 5' % script;
+    query = 'site:pastebin.com "%s" ' + date + ' ' + script;
     return query;
 
 def get_results(query):
@@ -132,6 +132,9 @@ def save_codes(allcodes, validcodes):
         
 print 'Beginning AuthLeech v0.1 by Contra';
 print 'Visit Recoders.org for Updates and more';
+
+date = raw_input('Date: ')
+
 roots = ['perfecticus', 'autocookerpro', 'autofighterpro', 'autogdkpro', 'autosoulwarspro', 'autogdkpro', 'autoagilitypro'];
 
 urls = [];
