@@ -16,61 +16,10 @@ import re
 codewriter = csv.writer(open('all_codes.csv', 'w'), delimiter=',');
 validwriter = csv.writer(open('valid_codes.csv', 'w'), delimiter=',');
 
+scriptnames = csv.reader(open('scriptnames.csv', 'r'), delimiter=',');
 auth = {};
-auth["24"] = "AutoHunter PRO";
-auth["25"] = "autoagility pro";
-auth["29"] = "AutoHerblore PRO";
-auth["39"] = "AutoFlaxer PRO";
-auth["43"] = "Autominer PRO";
-auth["47"] = "AutoSmelterNX";
-auth["51"] = "AutoWoodcutterPro";
-auth["64"] = "AutoFisherPro";
-auth["65"] = "AutoCooker PRO";
-auth["66"] = "Auto Firemaker";
-auth["67"] = "Fletcher";
-auth["71"] = "Autofighter PRO";
-auth["81"] = "Woodcutter";
-auth["84"] = "AutoFlaxerNX";
-auth["88"] = "AutoAlcher PRO";
-auth["98"] = "Auto Plunder Pro";
-auth["106"] = "Kminer";
-auth["107"] = "AutoCrabber PRO";
-auth["120"] = "Auto tanner PRO";
-auth["129"] = "Autorunecraft PRO";
-auth["159"] = "CoalTruck Nx";
-auth["167"] = "AutoSouWars PRO";
-auth["172"] = "Firemaking Trainer";
-auth["178"] = "Woodcutting Trainer";
-auth["222"] = "Tanning Trainer";
-auth["240"] = "AutoMTA PRO";
-auth["246"] = "AutoDagganothKiller NX";
-auth["257"] = "AutoGDK PRO";
-auth["264"] = "AutoOrb PRO";
-auth["277"] = "AutoSwampToad";
-auth["325"] = "Perfect Soul Wars";
-auth["343"] = "Perfect Fighter";
-auth["377"] = "AutoSnapeGrassPro";
-auth["385"] = "Monk Trainer";
-auth["401"] = "Autoavianses PRO";
-auth["405"] = "AutoMagicCS";
-auth["484"] = "AutoPotatoCactiPro";
-auth["485"] = "AutoPlankerPro";
-auth["493"] = "AutoBoltEnchanter";
-auth["496"] = "AutoMTACS";
-auth["588"] = "Auto Puro";
-auth["624"] = "Sorc Garden PRO";
-auth["627"] = "SorceressGardenNX";
-auth["661"] = "Perfectius Agility";
-auth["664"] = "Perfectus Firemaker";
-auth["665"] = "Perfectus Fisher (?)";
-auth["668"] = "Perfecticus Pest Control";
-auth["777"] = "Super Smither";
-auth["788"] = "Altar Prayer";
-auth["790"] = "Super GE sniper";
-auth["795"] = "AIO Jewelry Crafter";
-auth["799"] = "Auto Jewelry PRO";
-auth["801"] = "Super Leapfischer";
-auth["817"] = "AutoGildedAltar PRO";
+for row in scriptnames:
+    auth[row[0]] = row[1];
 
 def check_code(code):
     request = urllib2.urlopen('https://impsoft.net/nexus/onstart.php?prodauth=%s&hash=9001'%code);
@@ -81,7 +30,7 @@ def check_code(code):
         return True
     else:
         return False
-    
+
 def mk_nice_domain(domain):
     domain = re.sub("^www(\d+)?\.", "", domain)
     return domain
@@ -89,7 +38,7 @@ def mk_nice_domain(domain):
 def form_query(script):
     #"perfecticus" site:pastebin.com jan 30
     #today = date.today();
-    query = 'site:pastebin.com "%s" ' + date + ' ' + script;
+    query = 'site:pastebin.com "%s" %s' %(script, date);
     return query;
 
 def get_results(query):
