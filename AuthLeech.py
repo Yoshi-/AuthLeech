@@ -36,8 +36,6 @@ def mk_nice_domain(domain):
     return domain
 
 def form_query(script):
-    #"perfecticus" site:pastebin.com jan 30
-    #today = date.today();
     query = 'site:pastebin.com "%s" %s' %(script, date);
     return query;
 
@@ -65,7 +63,7 @@ def grab_codes(results):
         print 'Scanning %s' % url;
         request = urllib2.urlopen(url);
         html = request.read();
-        for rest in re.findall('[0-9][0-9]?[0-9][xX][zZ][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]', html):
+        for rest in re.findall('[0-9][0-9]?[0-9][xX][zZ][A-Z0-9]{13}', html):
             codes.append(rest);
             total = total + 1;
             print 'Found code %s' % rest;
@@ -79,7 +77,7 @@ def save_codes(allcodes, validcodes):
         validwriter.writerow([get_name(code), code]);
     return;
         
-print 'Beginning AuthLeech v0.1 by Contra';
+print 'Beginning AuthLeech v0.2 by Contra';
 print 'Visit Recoders.org for Updates and more';
 
 date = raw_input('Date: ')
