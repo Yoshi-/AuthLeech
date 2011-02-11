@@ -15,9 +15,11 @@ import re
 
 codewriter = csv.writer(open('all_codes.csv', 'w'), delimiter=',');
 validwriter = csv.writer(open('valid_codes.csv', 'w'), delimiter=',');
-
 scriptnames = csv.reader(open('scriptnames.csv', 'r'), delimiter=',');
+
+            
 auth = {};
+
 for row in scriptnames:
     auth[row[0]] = row[1];
 
@@ -64,23 +66,42 @@ def grab_codes(results):
         request = urllib2.urlopen(url);
         html = request.read();
         for rest in re.findall('[0-9][0-9]?[0-9][xX][zZ][A-Z0-9]{13}', html):
-            codes.append(rest);
-            total = total + 1;
-            print 'Found code %s' % rest;
+            if (rest in old and new == 'y'):
+                print 'Old Code found %s' %rest;
+            else:
+                codes.append(rest);
+                total = total + 1;
+                print 'Found code %s' % rest;
         print 'Found %s codes in scan' % total;
     return codes;
 
 def save_codes(allcodes, validcodes):
     for code in allcodes:
         codewriter.writerow([get_name(code), code]);
+        if(new == 'y'):
+            alreadyfound.writerow([code]);
     for code in validcodes:
+        if(new == 'y'):
+            alreadyfound.writerow([code]);
         validwriter.writerow([get_name(code), code]);
     return;
+
         
 print 'Beginning AuthLeech v0.2 by Contra';
 print 'Visit Recoders.org for Updates and more';
 
-date = raw_input('Date: ')
+date = raw_input('Date: ');
+new = raw_input('Only find new auths?(y/n)');
+
+old = {};
+if(new == 'y'):
+    alreadyfound = csv.writer(open('already_found.csv', 'a'));
+    alreadyfound_reader = csv.reader(open('already_found.csv', 'r'));
+    if alreadyfound is not None:
+        for row in alreadyfound_reader:
+            old[row[0]] = '0';
+    print 'Finding only new Auths';
+    
 
 roots = ['perfecticus', 'autocookerpro', 'autofighterpro', 'autogdkpro', 'autosoulwarspro', 'autogdkpro', 'autoagilitypro'];
 
